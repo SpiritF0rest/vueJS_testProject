@@ -32,7 +32,7 @@
           <li>
             <router-link to="/wish-list">
               <i class="fas fa-heart"></i>
-              <span id="nav-notif"></span>
+              <span id="nav-not"></span>
             </router-link>
           </li>
           <li>
@@ -51,11 +51,15 @@
     <h1>Articles</h1>
 
       <!-- search display -->
+      <input v-model="searchKey" type="search" id="search" placeholder="Rechercher ..." autocomplete="off" />
+      <span v-if="searchKey && filteredList.length >= 1">
+        {{ filteredList.length }} résultat<span v-if="filteredList.length >= 2">s</span>
+      </span>
 
       <!-- cards display -->
       <div class="card-cart-container">
         <div class="card-container">
-          <div v-for="product in products" class="card">
+          <div v-for="product in filteredList" class="card">
 
             <div class="img-container">
               <img :src="product.img" alt="" />
@@ -72,6 +76,9 @@
                   type="checkbox"
                   name="checkbox"
                   :id="product.id"
+                  :value="product.id"
+                  v-model="liked"
+                  @click="setLikeCookie()"
                 />
                 <label :for="product.id">
                   <i class="fas fa-heart"></i>
@@ -79,13 +86,33 @@
               </div>
 
               <div class="add-to-cart">
-                <button>
+                <button v-on:click="addToCart(product)">
                   <i class="fas fa-shopping-cart"></i>
                 </button>
               </div>
 
             </div>
 
+          </div>
+          <!-- no result message -->
+          <div v-if="filteredList.length == []" class="no-result">
+            <h3>Désolé</h3>
+            <p>Aucun résultat trouvé</p>
+          </div>
+        </div>
+        <!-- cart display -->
+        <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">
+          <h2>Panier</h2>
+
+          <div v-for="product in cart" class="item">
+
+            <div class="img-container">
+              <img :src="product.img" alt="" />
+            </div>
+
+            <div class="item-description">
+              <h4></h4>
+            </div>
           </div>
         </div>
       </div>
@@ -94,6 +121,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+  <script src="https://unpkg.com/vue-cookies@1.7.4/vue-cookies.js"></script>
   <script src="./assets/js/vue.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
