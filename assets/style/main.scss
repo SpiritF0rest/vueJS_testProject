@@ -465,8 +465,8 @@ nav {
     &-enter,
     &-leave-to {
       opacity: 0;
-      transform: translateY(100px);
-      transition: .7s;
+      transform: translate(-50px);
+      transition: .5s;
     }
   }
 }

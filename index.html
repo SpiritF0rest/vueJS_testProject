@@ -101,20 +101,52 @@
           </div>
         </div>
         <!-- cart display -->
+        <transition name="cart-anim">
+        
         <div v-if="cart.length > 0" class="shopping-cart" id="shopping-cart">
           <h2>Panier</h2>
 
-          <div v-for="product in cart" class="item">
+          <transitionGroup name="item-anim" tag="div" class="item-group">
+          <div v-for="product, id in cart" :key="product.id" class="item">
 
             <div class="img-container">
               <img :src="product.img" alt="" />
             </div>
 
             <div class="item-description">
-              <h4></h4>
+              <h4>{{ product.description }}</h4>
+              <p>{{ product.price }}€</p>
+            </div>
+
+            <div class="item-quantity">
+              <h6>quantité: {{ product.quantity }}</h6>
+            
+
+            <div class="cart-icons">
+              <button @click="cartPlusOne(product)">
+                <i class="fa fa-plus"></i>
+              </button>
+              <button @click="cartMinusOne(product, id)">
+                <i class="fa fa-minus"></i>
+              </button>
+              <button @click="cartRemoveItem(id)">
+                <i class="fa fa-trash"></i>
+              </button>
             </div>
           </div>
+          </div>
+        </transitionGroup>
+
+          <div class="grand-total">
+            <div class="total">
+              <h2>Total</h2>
+              <h2>{{ cartTotalAmount }}€</h2>
+            </div>
+            <h6>Total articles: {{ itemTotalAmount }}</h6>
+          </div>
+
         </div>
+      </transition>
       </div>
     </div>
   </script>

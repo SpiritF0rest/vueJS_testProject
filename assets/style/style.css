@@ -413,8 +413,8 @@ nav .nav-container #icons i:hover {
 }
 .home-container .item-anim-enter, .home-container .item-anim-leave-to {
   opacity: 0;
-  transform: translateY(100px);
-  transition: 0.7s;
+  transform: translate(-50px);
+  transition: 0.5s;
 }
 
 @keyframes scaler {
